@@ -1,0 +1,1047 @@
+<!doctype html>
+<html lang="tl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lasa ng Bukidnon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23164a36' d='M50 25 L20 75 L80 75 Z' /%3E%3Cpath fill='%232f6b55' d='M50 45 L35 75 L65 75 Z' /%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;500;700&family=Special+Elite&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+<style>
+  /* -------------------------
+     Variables & base layout
+     ------------------------- */
+  :root{
+    --dark-green: #0b3d2e;
+    --forest: #164a36;
+    --olive: #2f6b55;
+    --cream: #f5efe6;
+    --mustard: #caa83a;
+    --muted: #9aa08f;
+    --paper-base: #efe7da;
+    --max-width: 980px;
+    --polaroid-w: 180px;
+
+    /* Default to Dark Theme Variables */
+    --c-bg: var(--dark-green);
+    --c-text: var(--cream);
+    --c-paper-gradient: linear-gradient(180deg, rgba( 10,35,25,0.96), rgba(12,40,30,0.95));
+    --c-shadow-heavy: rgba(0,0,0,0.6);
+    --c-shadow-medium: rgba(0,0,0,0.4);
+    --c-chip-bg: rgba(255,255,255,0.03);
+    --c-bookmark-bg: rgba(255,255,255,0.02);
+    --c-faded-ink-gradient: linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0.85));
+    --c-stain-vignette: rgba(0,0,0,0.06);
+    --c-stain-ring: rgba(0,0,0,0.06);
+    --c-stain-tan: rgba(210,180,140,0.06);
+    --c-excerpt-fade: rgba(0,0,0,0.45);
+  }
+
+  /* Respect OS theme preference */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --c-bg: #fdfaf4;
+      --c-text: #3d352e;
+      --c-paper-gradient: linear-gradient(180deg, rgba(255,250,240,0.95), rgba(250,243,232,0.95));
+      --c-shadow-heavy: rgba(0,0,0,0.18);
+      --c-shadow-medium: rgba(0,0,0,0.12);
+      --c-chip-bg: rgba(0,0,0,0.04);
+      --c-bookmark-bg: rgba(0,0,0,0.03);
+      --c-faded-ink-gradient: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.75));
+      --c-stain-vignette: rgba(160, 120, 90, 0.08); /* Brownish stain */
+      --c-stain-ring: rgba(160, 120, 90, 0.08);
+      --c-stain-tan: rgba(160, 120, 90, 0.06);
+      --c-excerpt-fade: #f5efe6;
+    }
+  }
+
+  /* Explicit theme overrides */
+  body[data-theme="light"] {
+    --c-bg: #fdfaf4;
+    --c-text: #3d352e;
+    --c-paper-gradient: linear-gradient(180deg, rgba(255,250,240,0.95), rgba(250,243,232,0.95));
+    --c-shadow-heavy: rgba(0,0,0,0.18);
+    --c-shadow-medium: rgba(0,0,0,0.12);
+    --c-chip-bg: rgba(0,0,0,0.04);
+    --c-bookmark-bg: rgba(0,0,0,0.03);
+    --c-faded-ink-gradient: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.75));
+    --c-stain-vignette: rgba(160, 120, 90, 0.08);
+    --c-stain-ring: rgba(160, 120, 90, 0.08);
+    --c-stain-tan: rgba(160, 120, 90, 0.06);
+    --c-excerpt-fade: #f5efe6;
+  }
+
+  *{box-sizing:border-box}
+  html{
+    height:100%;
+    scroll-behavior:smooth;
+    background:
+      radial-gradient(1200px 400px at 10% 5%, rgba(0,0,0,0.02), transparent 10%),
+      radial-gradient(900px 300px at 95% 95%, rgba(0,0,0,0.02), transparent 10%),
+      repeating-linear-gradient(45deg, rgba(0,0,0,0.01) 0 6px, transparent 6px 12px);
+  }
+  body{
+    margin:0;
+    min-height:100%;
+    font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    display:flex;
+    justify-content:center;
+    padding:36px 18px;
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    transition: background-color .35s ease, color .35s ease;
+  }
+
+  .container{
+    width:100%; max-width:var(--max-width);
+    background: var(--c-paper-gradient);
+    color: var(--c-text);
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 14px 40px var(--c-shadow-heavy);
+    position:relative;
+    overflow:visible;
+  }
+
+  .container::before{
+    content:"";
+    pointer-events:none;
+    position:absolute;
+    inset:0;
+    border-radius:14px;
+    background:
+      radial-gradient(200px 200px at 8% 12%, var(--c-stain-vignette), transparent 30%),
+      radial-gradient(160px 160px at 92% 88%, var(--c-stain-vignette), transparent 30%),
+      linear-gradient(transparent, rgba(0,0,0,0.03));
+    mix-blend-mode: multiply;
+    z-index:8;
+  }
+  .container::after{
+    content:"";
+    pointer-events:none;
+    position:absolute;
+    width:220px; height:220px;
+    left:-40px; top:-40px;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 40% 40%, var(--c-stain-ring) 0 35%, rgba(0,0,0,0.02) 36% 46%, transparent 48%),
+      linear-gradient(135deg, var(--c-stain-tan), rgba(210,180,140,0.02));
+    transform: rotate(-12deg);
+    z-index:7;
+    filter: blur(0.6px);
+  }
+
+  header{ display:flex; gap:16px; align-items:center; z-index:10; }
+  .logo{ 
+    width:68px; 
+    height:68px; 
+    border-radius:10px; 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 8px;
+    background: linear-gradient(135deg,var(--olive),var(--forest)); 
+    box-shadow: 0 6px 10px rgba(0,0,0,0.35) inset; 
+  }
+  .title-wrap{ display:flex; flex-direction:column; }
+  .publisher-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Special Elite', cursive;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: -2px;
+    letter-spacing: 0.5px;
+  }
+  .publisher-name .logo-svg {
+    width: 24px;
+    height: 24px;
+    opacity: 0.8;
+  }
+  .publisher-name .logo-svg path {
+    fill: var(--muted);
+  }
+  h1{ margin:0; font-family:'Playfair Display',serif; font-size:28px; color:var(--c-text); line-height:1.2; white-space:pre-wrap; position:relative; z-index:10; }
+  h1.faded-ink{
+    background: var(--c-faded-ink-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.98;
+    filter: grayscale(.05) contrast(.95);
+    text-shadow: 0.2px 0.2px rgba(0,0,0,0.02), -0.2px -0.2px rgba(255,255,255,0.01);
+  }
+
+  #cursor{ display:inline-block; width:1ch; color:var(--mustard); animation: blink .7s steps(1) infinite; }
+  @keyframes blink{ 50%{opacity:0} }
+
+  .meta{ margin-top:6px; color: var(--muted); font-size:13px; font-family:'Special Elite', cursive; }
+  body[data-theme="light"] .meta { color: #8a8f81; }
+
+  nav{ display:flex; flex-wrap: wrap; gap:12px 20px; justify-content:center; margin:12px 0; font-family:'Special Elite',cursive; z-index:10; }
+  nav a{ color:var(--mustard); text-decoration:none; padding:6px 8px; position:relative; border-radius: 4px; }
+  nav a::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height:3px; background: linear-gradient(90deg,var(--mustard), rgba(255,255,255,0.15));
+    transform: scaleX(0); transform-origin:left center; transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    border-radius:2px;
+  }
+  nav a:hover::after, nav a:focus-visible::after { transform: scaleX(1); }
+  nav a:focus-visible { outline: 2px solid var(--mustard); outline-offset: 2px; }
+
+  .bookmarks{ display:flex; gap:10px; justify-content:center; margin-bottom:10px; color:var(--muted); font-size:13px; }
+  .bookmarks a{
+    padding:6px 10px;
+    border-radius:999px;
+    background: var(--c-bookmark-bg);
+    color:var(--muted);
+    text-decoration:none;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .bookmarks a:hover{
+    color: var(--c-text);
+    background: var(--mustard);
+  }
+
+  .hero{ 
+    margin-top:18px; 
+    border-radius:8px; 
+    overflow:hidden; 
+    box-shadow: 0 10px 28px var(--c-shadow-heavy); 
+    position:relative; 
+    height: 400px;
+  }
+  .hero img{ 
+    width:100%; 
+    height: 120%;
+    object-fit: cover;
+    display:block; 
+    filter: contrast(.98) saturate(.96); 
+    position: absolute;
+    top: -10%;
+  }
+  .stamp{ 
+    position:absolute; 
+    bottom:12px; 
+    right:12px; 
+    font-family:'Special Elite',cursive; 
+    color:var(--mustard); 
+    font-size:14px; 
+    background: rgba(0,0,0,0.36); 
+    padding:6px 10px; 
+    border-radius:6px; 
+    transform: rotate(-6deg); 
+    opacity:0; 
+    transform-origin:center; 
+    animation: stampPress .9s ease 0.9s forwards; 
+    transition: opacity 0.2s ease;
+  }
+  .stamp.is-changing { opacity: 0.7; }
+  @keyframes stampPress{
+    0%{ transform: translateY(-10px) rotate(-6deg) scale(.9); opacity:0; }
+    60%{ transform: translateY(6px) rotate(-6deg) scale(1.05); opacity:1; }
+    100%{ transform: translateY(0) rotate(-6deg) scale(1); opacity:1; }
+  }
+
+  article{ margin-top:18px; color:var(--c-text); line-height:1.7; font-size:15.6px; }
+  article#journal p {
+    text-indent: 1.5em;
+  }
+  article#journal p:first-of-type,
+  article#journal blockquote + p {
+    text-indent: 0;
+  }
+  .drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5em;
+    float: left;
+    line-height: 0.8;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--mustard);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+  .story-divider {
+    text-align: center;
+    margin: 28px 0;
+    color: var(--mustard);
+    font-family: 'Special Elite', cursive;
+    font-size: 20px;
+    opacity: 0.8;
+    line-height: 1;
+  }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; margin-top: 24px; color: var(--c-text); text-align: center; }
+
+  .read-more {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--mustard);
+    background: var(--c-chip-bg);
+    border: 1px dashed var(--muted);
+    font-family: 'Special Elite', cursive;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 15px;
+    transition: all .25s ease;
+    transform: rotate(-1deg);
+  }
+  .read-more:hover {
+    background: var(--mustard);
+    color: #3d352e;
+    border-style: solid;
+    border-color: transparent;
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 4px 10px var(--c-shadow-medium);
+  }
+  .read-more:focus-visible {
+    outline: 2px solid var(--mustard);
+    outline-offset: 2px;
+    transform: rotate(0deg) scale(1.05);
+  }
+
+  blockquote{ font-family:'Special Elite', cursive; font-size:17px; color:var(--mustard); border-left:4px solid var(--mustard); padding-left:12px; margin:24px 0 8px;}
+  .signature{ text-align: right; font-style: italic; }
+
+  .polaroids{ display:flex; flex-wrap:wrap; gap:16px; margin-top:14px; justify-content:center; }
+  .polaroid{ 
+    width:var(--polaroid-w); 
+    background:#fff; 
+    padding:10px 10px 22px; 
+    border-radius:6px; 
+    box-shadow:0 8px 20px var(--c-shadow-heavy); 
+    position:relative; 
+    cursor:pointer; 
+    transition: transform .28s ease, box-shadow .28s ease; 
+    filter: sepia(.16) contrast(.95) brightness(.98); 
+    animation: fadeIn .5s ease-out forwards;
+    opacity: 0;
+  }
+  .polaroid:nth-child(1) { animation-delay: 0.2s; }
+  .polaroid:nth-child(2) { animation-delay: 0.3s; }
+  .polaroid:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .polaroid:hover, .polaroid:focus-visible { transform: translateY(-6px) rotate(0deg) scale(1.06); box-shadow: 0 14px 30px var(--c-shadow-heavy); }
+  .polaroid:focus-visible { outline: none; }
+  .polaroid img{ width:100%; height: calc(var(--polaroid-w) * 1.05); object-fit:cover; border-radius:4px; display:block; }
+  .polaroid .img-wrap { position: relative; }
+  .polaroid .img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    transition: opacity .28s ease;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .polaroid:hover .img-wrap::after {
+    opacity: 1;
+  }
+  .polaroid p{ margin:8px 0 0; text-align:center; color:#333; font-family:'Special Elite', cursive; font-size:13px; }
+  .scribble{ 
+    position:absolute; 
+    z-index: 5; 
+    top: 10px; 
+    left: 10px;
+    right: 10px;
+    pointer-events:none; 
+    text-align:left; 
+    font-family:'Shadows Into Light', cursive; 
+    color:#2b2b2b; 
+    font-size:14px; 
+    opacity:0; 
+    transform: translateY(6px); 
+    transition: all .22s ease;
+    line-height: 1.2;
+  }
+  .polaroid:hover .scribble, .polaroid:focus-visible .scribble { opacity:1; transform: translateY(0); }
+
+  .polaroid::before{
+    content:""; position:absolute; top:-12px; left:26px; width:60%; height:16px; border-radius:4px; transform: rotate(-4deg); opacity:.9;
+    background: repeating-linear-gradient(45deg, #f4d7c3 0 6px, #f9d1d8 6px 12px);
+  }
+  .polaroid:nth-child(2)::before{ transform: rotate(6deg); left:auto; right:22px; }
+  .polaroid:nth-child(3)::before{ transform: rotate(-10deg); left:18px; }
+
+  .lightbox-wrap{ display:none; position:fixed; z-index:1600; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.9); align-items:center; justify-content:center; flex-direction: column; }
+  .lightbox-wrap.show{ display:flex; }
+  .lightbox-img{ max-width:92%; max-height:80%; border-radius:8px; box-shadow:0 12px 40px rgba(0,0,0,0.9); }
+  .lightbox-caption-wrap {
+    margin-top: 14px;
+    text-align: center;
+    max-width: 80%;
+  }
+  .lightbox-caption {
+    color: var(--cream);
+    font-family: 'Special Elite', cursive;
+    font-size: 18px;
+    margin: 0;
+  }
+  .lightbox-subcaption {
+    color: var(--muted);
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 20px;
+    margin-top: 4px;
+  }
+  .lightbox-close, .lightbox-nav { border-radius:999px; background:rgba(0,0,0,0.2); color:var(--cream); cursor:pointer; border:0; display:flex; align-items:center; justify-content:center; }
+  .lightbox-close { position:absolute; top:18px; right:18px; font-size:28px; width: 48px; height: 48px;}
+  .lightbox-nav { position:absolute; top:45%; transform:translateY(-50%); font-size:28px; width:48px; height:48px; }
+  .lightbox-prev{ left:22px; }
+  .lightbox-next{ right:22px; }
+
+  .about-polaroid{ width:220px; background:#fff; padding:12px 12px 18px; border-radius:6px; box-shadow:0 8px 24px var(--c-shadow-heavy); position:relative; filter: sepia(.14) contrast(.95) brightness(.98); margin:8px auto;}
+  .about-polaroid img{ width:100%; height:200px; object-fit:cover; border-radius:4px; display:block;}
+  .about-polaroid .caption { color: #333; text-align: center; font-family: 'Special Elite', cursive; font-size: 14px; margin-top: 8px; }
+  .about-block{ margin-top:18px; display:flex; gap:18px; align-items:center; justify-content:center; flex-direction:column; text-align:center; }
+  .about-expand{ max-height:0; overflow:hidden; transition: max-height .35s ease; }
+  .about-expand.open{ max-height:300px; }
+
+  .sticky-note{ position:fixed; top:18px; left:18px; z-index:1700; width:190px; padding:12px; background:#fff8c2; color:#222; font-family:'Shadows Into Light', cursive; border:1px solid #e6ddb0; box-shadow:2px 8px 24px rgba(0,0,0,0.24); transform:rotate(-5deg); cursor:grab; }
+  .sticky-tape{ position:absolute; top:-10px; left:12px; width:60px; height:18px; background: repeating-linear-gradient(45deg,#f0cfc0,#f0cfc0 6px,#f7e9c9 6px,#f7e9c9 12px); transform:rotate(-6deg); box-shadow:0 3px 6px rgba(0,0,0,0.12); }
+  .sticky-tape.right{ left:auto; right:12px; transform:rotate(6deg); }
+
+  .back-to-top{ position:fixed; right:18px; bottom:18px; z-index:1500; width:48px; height:48px; border-radius:999px; background:rgba(0,0,0,0.5); display:flex;align-items:center;justify-content:center;color:var(--mustard); font-family:'Special Elite', cursive; cursor:pointer; box-shadow:0 8px 18px var(--c-shadow-medium); border:1px dashed rgba(255,255,255,0.06); opacity:0; transform:translateY(8px); transition:opacity .28s, transform .28s; }
+  .back-to-top.show{ opacity:1; transform:none; }
+  .postmark{ font-size:13px; transform:rotate(-8deg); }
+
+  footer{ margin-top:22px; padding-top:14px; border-top:1px dashed rgba(255,255,255,0.08); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items: center; }
+  .chip{ 
+    background: var(--c-chip-bg); 
+    padding:6px 12px; 
+    border-radius:999px; 
+    color:var(--c-text); 
+    font-size:13px; 
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+  .chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--c-shadow-medium);
+    border-color: var(--muted);
+  }
+
+  /* Tag Modal Styles */
+  .tag-modal-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .tag-modal-wrap.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .tag-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+  }
+  .tag-modal-content {
+    position: relative;
+    background: var(--paper-base);
+    color: var(--c-text);
+    padding: 24px 32px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    font-family: 'Special Elite', cursive;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-top: 10px solid var(--mustard);
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    text-align: center;
+  }
+  .tag-modal-wrap.show .tag-modal-content {
+    transform: scale(1);
+  }
+  .tag-modal-content h3 {
+    font-family: 'Playfair Display', serif;
+    margin: 0 0 12px;
+    color: var(--mustard);
+    font-size: 22px;
+  }
+  .tag-modal-content p {
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .tag-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: 0;
+    font-size: 24px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+  }
+  .tag-modal-close:hover {
+    color: var(--c-text);
+  }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    border-radius: 8px;
+    margin: 10px auto;
+    box-shadow: 0 10px 28px var(--c-shadow-heavy);
+  }
+  .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+
+  @media (max-width:760px){
+    .polaroid{ width:140px; }
+    .about-polaroid{ width:160px; }
+    .sticky-note{ display:none; }
+    .hero { height: 300px; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+  <div class="container" id="pageContainer">
+
+    <div class="sticky-note" id="stickyNote" role="note" aria-label="Paalala">
+      <div class="sticky-tape" aria-hidden="true"></div>
+      <div class="sticky-tape right" aria-hidden="true"></div>
+      ☕ Paalala: <br> Subukan ang cheesecake sa susunod! <br><small style="display:block;margin-top:8px;color:#6b6b6b">— J</small>
+    </div>
+
+    <nav id="mainNav">
+      <a href="#journal" data-stamp="Journal">Journal</a>
+      <a href="#vlog" data-stamp="Vlog">Vlog</a>
+      <a href="#photos" data-stamp="Photos">Mga Litrato</a>
+      <a href="#about" data-stamp="About">Tungkol sa Akin</a>
+      <a href="#" id="audioToggle" title="Toggle ambience">♫ Musika</a>
+      <a href="#" id="themeToggle" title="Toggle theme">☼</a>
+    </nav>
+
+    <div class="bookmarks">
+      <a href="#atmosphere">Ambiance</a>
+      <a href="#food">Pagkain</a>
+      <a href="#reflections">Repleksyon</a>
+    </div>
+
+    <div class="paper-frame" id="paperFrame">
+      <header>
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                  <linearGradient id="mountainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:var(--olive);" />
+                      <stop offset="100%" style="stop-color:var(--forest);" />
+                  </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="48" fill="url(#mountainGradient)" stroke="var(--cream)" stroke-width="3"/>
+              <path d="M30 70 L50 40 L70 70 L60 70 L50 55 L40 70 Z" fill="var(--cream)" opacity="0.8" />
+              <path d="M25 75 L40 60 L55 75 L45 75 L40 68 L35 75 Z" fill="var(--cream)" opacity="0.6" />
+              <path d="M55 75 L70 60 L85 75 L75 75 L70 68 L65 75 Z" fill="var(--cream)" opacity="0.6" />
+          </svg>
+        </div>
+        <div class="title-wrap">
+          <div class="publisher-name">
+            Lasa ng Bukidnon
+          </div>
+          <h1 id="title" class="faded-ink"><span id="cursor">|</span></h1>
+          <div class="meta">Ni Jeffrey M. Galan III • Setyembre 27, 2025 • Maramag, Bukidnon</div>
+        </div>
+      </header>
+
+      <div class="hero">
+        <img id="heroImage" src="hero-cafe-interior.jpg" alt="Loob ng isang vintage cafe na may mainit na ilaw at mga gamit na gawa sa kahoy.">
+        <div class="stamp" id="heroStamp">Set 27, 2025 — Maramag</div>
+      </div>
+
+      <article id="journal" aria-labelledby="title">
+        <p class="drop-cap" id="atmosphere">Sa gitna ng maalikabok na kalsada at matinding sikat ng araw sa Maramag, may mga lugar na nagsisilbing kanlungan—isang paanyaya upang saglit na huminto at huminga. Ganito ang naging dating sa akin ng 3Fern Café. Hindi ito planado; isa itong kusang paghahanap ng lilim na nauwi sa isang karanasang higit pa sa inaasahan. Sa pagbukas pa lang ng pinto, bumungad ang halimuyak ng kapeng bagong giling at ang payapang katahimikan—isang malinaw na paalala na sa loob, iba ang takbo ng oras.</p>
+
+        <div class="story-divider">* * *</div>
+
+        <p id="food">Ang sikat ng araw sa katanghalian, na karaniwa'y nakakasilaw, ay tila naging isang malumanay na ilaw sa loob ng café. Sumasayaw ito sa ibabaw ng mga mesang kahoy, nagbibigay-buhay sa bawat sulok, at nagiging mainit na yakap sa sinumang naroroon. Sa ilalim ng liwanag na ito, pinili ko ang <strong>Korean Beef Stew</strong> at <strong>Buffalo Wings</strong>. Isang ngiti mula sa staff ang naghatid ng menu, isang simpleng galaw na puno ng pag-aalaga. Nang dumating ang pagkain, hindi lang ito basta inihain; iniabot ito na may kasamang pakiramdam na para kang nasa sariling tahanan. Ang malasutlang lambot ng karne at ang malinamnam na sabaw ng stew ay naghatid ng ginhawa, habang ang anghang ng buffalo wings ay pumukaw sa aking diwa. Habang ninanamnam ang bawat subo, napansin ko ang mga detalye sa paligid: ang mga polaroid na nakasabit sa dingding na tila bintana sa mga nakaraang sandali, at ang mga kapwa customer na tahimik sa kani-kanilang mundo. Dito, ang pagkain ay hindi lang pampabusog, kundi bahagi ng isang mas malaking kwento ng katahimikan at pagpapahinga.</p>
+        
+        <blockquote>"Ang paglalakbay ay hindi tungkol sa layo kundi sa lalim ng sandaling iyong ninanamnam."</blockquote>
+        <p id="reflections">Umuwi akong baon hindi lang ang lasa ng pagkain, kundi ang pakiramdam ng isang tanghaling puno ng liwanag. Ang pagbisita sa 3Fern Café ay nagturo sa akin na ang pinakamalalalim na karanasan sa paglalakbay ay madalas na natatagpuan sa mga pinakasimpleng sandali: ang init ng araw sa iyong balat, ang kabaitan sa ngiti ng isang estranghero, at ang katahimikang nagbibigay-daan sa iyong marinig ang sarili. Ang paglalakbay, natutunan ko, ay hindi nasusukat sa layo ng narating, kundi sa lalim ng kahulugang naiwan sa puso. Ito ang tunay na diwa ng paghahanap ng kanlungan—hindi sa lugar, kundi sa sandali.</p>
+      </article>
+
+      <section id="vlog">
+        <h2 class="section-title">Lasa ng Bukidnon</h2>
+        <div class="video-container">
+          <video id="cafeVlog" controls poster="polaroid-overall-place.jpg" src="vlog-cafe-experience.mp4">
+            Paumanhin, hindi suportado ng iyong browser ang video tag.
+          </video>
+        </div>
+      </section>
+
+      <section id="photos">
+        <h2 class="section-title">Iba pang mga Litrato</h2>
+
+        <div class="polaroids" role="group" aria-label="Mga litratong polaroid">
+          <div class="polaroid" tabindex="0" data-full="polaroid-overall-place.jpg">
+            <div class="img-wrap">
+              <img src="polaroid-overall-place.jpg" alt="Isang tahimik na sulok sa loob ng cafe.">
+              <div class="scribble">Dito, sa bawat sulok, may katahimikang matatagpuan.</div>
+            </div>
+            <p>3Fern</p>
+          </div>
+
+          <div class="polaroid" tabindex="0" data-full="polaroid-beef-stew.jpg">
+            <div class="img-wrap">
+              <img src="polaroid-beef-stew.jpg" alt="Isang bowl ng mainit na Korean Beef Stew.">
+              <div class="scribble">Isang subo na nagpapaalala sa init ng tahanan.</div>
+            </div>
+            <p>Korean Beef Stew</p>
+          </div>
+
+          <div class="polaroid" tabindex="0" data-full="polaroid-buffalo-wings.jpg">
+            <div class="img-wrap">
+              <img src="polaroid-buffalo-wings.jpg" alt="Isang plato ng malutong na Buffalo Wings.">
+              <div class="scribble">Ang simpleng anghang-tamis na nagbibigay-sigla.</div>
+            </div>
+            <p>Buffalo Wings</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="about-section" aria-labelledby="aboutHeading">
+        <h2 id="aboutHeading" class="section-title">Tungkol sa Akin</h2>
+        <div class="about-block">
+          <div class="about-polaroid" aria-hidden="true">
+            <div style="position:absolute; left:12px; top:-8px; width:48px; height:18px; background: repeating-linear-gradient(45deg,#f0cfc0,#f0cfc0 6px,#f7e9c9 6px,#f7e9c9 12px); transform:rotate(-7deg); box-shadow:0 3px 6px rgba(0,0,0,0.12)"></div>
+            <div style="position:absolute; right:12px; top:-8px; width:48px; height:18px; background: repeating-linear-gradient(45deg,#f0cfc0,#f0cfc0 6px,#f7e9c9 6px,#f7e9c9 12px); transform:rotate(7deg); box-shadow:0 3px 6px rgba(0,0,0,0.12)"></div>
+            <img src="about-author-portrait.jpg" alt="Isang lalaking nakangiti">
+            <div class="caption">Jeffrey M. Galan III</div>
+          </div>
+
+          <div style="max-width:720px;color:var(--c-text);font-family:Montserrat;text-align:center;">
+            <p>Isa akong manlalakbay at manunulat. Tumatambay ako sa mga tahimik na café, nangongolekta ng maliliit na alaala, at isinusulat ang mga ito na parang mga postkard para sa aking sarili.</p>
+            <div id="aboutExtra" class="about-expand" aria-hidden="true">
+              <p style="margin-top:8px;">Mga trivia: Mahilig ako sa maulang hapon, pag-drawing ng mga tasa ng kape, at pagtikim ng lokal na keyk saan man ako magpunta. Paboritong inumin: purong kape na may kaunting brown sugar.</p>
+            </div>
+            <button id="aboutToggle" class="read-more" aria-controls="aboutExtra" aria-expanded="false">Basahin lahat</button>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>Tags: 
+          <span class="chip" data-tag-title="Tungkol sa Café" data-quote="Sa bawat higop ng kape, may bagong kwentong nabubuo at may lumang alaalang binabalikan.">cafe</span> 
+          <span class="chip" data-tag-title="Tungkol sa Lumang Panahon" data-quote="Ang hindi lumingon sa pinanggalingan ay hindi makakarating sa paroroonan. — Dr. Jose Rizal">vintage</span> 
+          <span class="chip" data-tag-title="Tungkol sa Paglalakbay" data-quote="Ang tunay na paglalakbay ay hindi ang paghahanap ng mga bagong tanawin, kundi ang pagkakaroon ng mga bagong mata.">paglalakbay</span>
+        </div>
+        <div style="opacity:0.9;color:var(--c-text);font-size:13px">Travel Journal • 2025</div>
+      </footer>
+    </div>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Bumalik sa taas"><span class="postmark">⇧</span></button>
+
+  <div class="lightbox-wrap" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lbClose" aria-label="Isara">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Nakaraan">‹</button>
+    <img id="lbImg" class="lightbox-img" src="" alt="Pinalaking litrato">
+    <div id="lbCaptionWrap" class="lightbox-caption-wrap">
+      <p id="lbCaption" class="lightbox-caption"></p>
+      <small id="lbSubCaption" class="lightbox-subcaption"></small>
+    </div>
+    <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Susunod">›</button>
+  </div>
+
+  <div class="tag-modal-wrap" id="tagModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="tag-modal-backdrop" id="tagModalBackdrop"></div>
+    <div class="tag-modal-content">
+      <h3 id="tagModalTitle"></h3>
+      <p id="tagModalQuote"></p>
+      <button class="tag-modal-close" id="tagModalClose" aria-label="Isara">✕</button>
+    </div>
+  </div>
+
+  <audio id="ambience" loop preload="none">
+    <source src="audio-cafe-ambience.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+// Wait for the entire HTML document to be loaded and parsed
+document.addEventListener('DOMContentLoaded', () => {
+
+  // --- DOM ELEMENT SELECTORS ---
+  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  const audioToggle = document.getElementById('audioToggle');
+  const ambienceAudio = document.getElementById('ambience');
+  const cafeVlog = document.getElementById('cafeVlog');
+  const backToTopBtn = document.getElementById('backToTop');
+  const polaroidElements = Array.from(document.querySelectorAll('.polaroid'));
+  const heroImage = document.getElementById('heroImage');
+  const heroStamp = document.getElementById('heroStamp');
+  const mainNav = document.getElementById('mainNav');
+  const tagChips = document.querySelectorAll('.chip[data-quote]');
+  const tagModal = {
+    wrap: document.getElementById('tagModal'),
+    title: document.getElementById('tagModalTitle'),
+    quote: document.getElementById('tagModalQuote'),
+    closeBtn: document.getElementById('tagModalClose'),
+    backdrop: document.getElementById('tagModalBackdrop')
+  };
+
+  const lightbox = {
+    wrap: document.getElementById('lightbox'),
+    img: document.getElementById('lbImg'),
+    caption: document.getElementById('lbCaption'),
+    subCaption: document.getElementById('lbSubCaption'),
+    closeBtn: document.getElementById('lbClose'),
+    prevBtn: document.getElementById('lbPrev'),
+    nextBtn: document.getElementById('lbNext'),
+    currentIndex: -1
+  };
+  
+  // --- AUDIO FADING LOGIC ---
+  let isAmbientMusicOn = false;
+  const ambientVolume = 0.4; // Target volume for ambient music
+  ambienceAudio.volume = 0; // Start with volume at 0
+
+  /**
+   * Smoothly fades an audio element's volume.
+   * @param {HTMLAudioElement} audioElement The audio element to fade.
+   * @param {number} targetVolume The volume to fade to (0-1).
+   * @param {number} duration The duration of the fade in milliseconds.
+   */
+  function fadeAudio(audioElement, targetVolume, duration = 1000) {
+    const startVolume = audioElement.volume;
+    const volumeChange = targetVolume - startVolume;
+    if (volumeChange === 0) return;
+
+    const stepInterval = 50;
+    const totalSteps = duration / stepInterval;
+    const volumeStep = volumeChange / totalSteps;
+    let currentStep = 0;
+
+    if (audioElement.fadeInterval) {
+      clearInterval(audioElement.fadeInterval);
+    }
+    
+    if (targetVolume > 0 && audioElement.paused) {
+      audioElement.play().catch(()=>{});
+    }
+
+    audioElement.fadeInterval = setInterval(() => {
+      currentStep++;
+      if (currentStep >= totalSteps) {
+        clearInterval(audioElement.fadeInterval);
+        audioElement.volume = targetVolume;
+        if (targetVolume === 0) {
+          audioElement.pause();
+        }
+        return;
+      }
+      audioElement.volume = Math.max(0, Math.min(1, startVolume + (volumeStep * currentStep)));
+    }, stepInterval);
+  }
+
+  // --- THEME MANAGEMENT ---
+  function applyTheme(theme) {
+    body.setAttribute('data-theme', theme);
+    themeToggle.textContent = theme === 'light' ? '☾' : '☼';
+    localStorage.setItem('theme', theme);
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
+  }
+  
+  // --- TYPEWRITER EFFECT ---
+  function runTypewriter() {
+    const text = "3Fern: Isang Tanghali ng Liwanag at Lasa";
+    const titleEl = document.getElementById('title');
+    const cursorHTML = "<span id='cursor'>|</span>";
+    let i = 0;
+    
+    function type() {
+      if (i < text.length) {
+        titleEl.innerHTML = text.substring(0, i + 1) + cursorHTML;
+        i++;
+        setTimeout(type, 65);
+      } else {
+        titleEl.innerHTML = text + cursorHTML;
+      }
+    }
+    type();
+  }
+
+  // --- LIGHTBOX GALLERY ---
+  function openLightbox(index) {
+    if (index < 0 || index >= polaroidElements.length) return;
+    
+    const polaroid = polaroidElements[index];
+    const src = polaroid.dataset.full || polaroid.querySelector('img')?.src || '';
+    
+    lightbox.img.src = src;
+    const captionText = polaroid.querySelector('p').textContent;
+    const subCaptionText = polaroid.querySelector('.scribble').textContent;
+    
+    lightbox.caption.textContent = captionText;
+    lightbox.subCaption.textContent = subCaptionText;
+    
+    lightbox.wrap.classList.add('show');
+    lightbox.wrap.setAttribute('aria-hidden', 'false');
+    lightbox.currentIndex = index;
+    lightbox.closeBtn.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.wrap.classList.remove('show');
+    lightbox.wrap.setAttribute('aria-hidden', 'true');
+    lightbox.img.src = '';
+    lightbox.caption.textContent = '';
+    lightbox.subCaption.textContent = '';
+    
+    if (lightbox.currentIndex !== -1 && polaroidElements[lightbox.currentIndex]) {
+      polaroidElements[lightbox.currentIndex].focus();
+    }
+    lightbox.currentIndex = -1;
+  }
+  
+  function navigateLightbox(offset) {
+    if (lightbox.currentIndex === -1) return;
+    const newIndex = (lightbox.currentIndex + offset + polaroidElements.length) % polaroidElements.length;
+    openLightbox(newIndex);
+  }
+
+  // --- TAG MODAL ---
+  function openTagModal(title, quote) {
+    if (!tagModal.wrap) return;
+    tagModal.title.textContent = title;
+    tagModal.quote.textContent = quote;
+    tagModal.wrap.classList.add('show');
+    tagModal.wrap.setAttribute('aria-hidden', 'false');
+    tagModal.closeBtn.focus();
+  }
+
+  function closeTagModal() {
+    if (!tagModal.wrap) return;
+    tagModal.wrap.classList.remove('show');
+    tagModal.wrap.setAttribute('aria-hidden', 'true');
+  }
+
+  // --- EXPANDABLE CONTENT ---
+  function toggleExpandable(button) {
+    const targetId = button.getAttribute('aria-controls');
+    const targetEl = document.getElementById(targetId);
+    if (!targetEl) return;
+
+    const isOpen = targetEl.classList.toggle('open');
+    button.setAttribute('aria-expanded', isOpen);
+    button.textContent = isOpen ? 'Itago' : 'Basahin lahat';
+  }
+
+  // --- STICKY NOTE DRAGGING ---
+  function initStickyNote() {
+    const note = document.getElementById('stickyNote');
+    if (!note) return;
+    
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    note.style.transform = `rotate(${rand(-8, -2)}deg)`;
+    note.style.opacity = rand(0.9, 1);
+    
+    let dragging = false, offset = { x: 0, y: 0 };
+    
+    const onDown = (e) => {
+        dragging = true;
+        const rect = note.getBoundingClientRect();
+        const clientX = e.clientX || e.touches[0].clientX;
+        const clientY = e.clientY || e.touches[0].clientY;
+        offset.x = clientX - rect.left;
+        offset.y = clientY - rect.top;
+        note.style.cursor = 'grabbing';
+    };
+
+    const onMove = (e) => {
+        if (!dragging) return;
+        e.preventDefault();
+        const clientX = e.clientX || e.touches[0].clientX;
+        const clientY = e.clientY || e.touches[0].clientY;
+        note.style.left = `${clientX - offset.x}px`;
+        note.style.top = `${clientY - offset.y}px`;
+    };
+
+    const onUp = () => {
+        dragging = false;
+        note.style.cursor = 'grab';
+    };
+    
+    note.addEventListener('mousedown', onDown);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    note.addEventListener('touchstart', onDown, { passive: false });
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onUp);
+  }
+
+  // --- INTERACTIVE STAMP ---
+  function initInteractiveStamp() {
+      if (!mainNav || !heroStamp) return;
+      const originalStampText = heroStamp.textContent;
+      const navLinks = mainNav.querySelectorAll('a[data-stamp]');
+
+      navLinks.forEach(link => {
+          link.addEventListener('mouseenter', () => {
+              const stampText = link.getAttribute('data-stamp');
+              heroStamp.classList.add('is-changing');
+              setTimeout(() => {
+                  heroStamp.textContent = stampText;
+                  heroStamp.classList.remove('is-changing');
+              }, 100);
+          });
+      });
+
+      mainNav.addEventListener('mouseleave', () => {
+          heroStamp.classList.add('is-changing');
+          setTimeout(() => {
+              heroStamp.textContent = originalStampText;
+              heroStamp.classList.remove('is-changing');
+          }, 100);
+      });
+  }
+
+  // --- GLOBAL EVENT LISTENERS ---
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    
+    if (target.closest('#themeToggle')) {
+      e.preventDefault();
+      const newTheme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(newTheme);
+    }
+    
+    if (target.closest('#audioToggle')) {
+      e.preventDefault();
+      isAmbientMusicOn = !isAmbientMusicOn;
+      if(isAmbientMusicOn) {
+        fadeAudio(ambienceAudio, ambientVolume, 1500);
+        target.textContent = '♫ Musika (On)';
+      } else {
+        fadeAudio(ambienceAudio, 0, 1500);
+        target.textContent = '♫ Musika';
+      }
+    }
+
+    if (target.closest('#backToTop')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    if (target.matches('.read-more')) {
+      toggleExpandable(target);
+    }
+
+    const polaroid = target.closest('.polaroid');
+    if (polaroid) {
+      const index = polaroidElements.indexOf(polaroid);
+      openLightbox(index);
+    }
+
+    if (target.matches('.chip[data-quote]')) {
+        const title = target.dataset.tagTitle || 'Isang Kaisipan';
+        const quote = target.dataset.quote;
+        openTagModal(title, quote);
+    }
+
+    if (target === lightbox.closeBtn || target.closest('.lightbox-wrap') && !target.closest('.lightbox-img, .lightbox-nav, .lightbox-caption-wrap')) {
+        closeLightbox();
+    }
+    if (target === tagModal.closeBtn || target === tagModal.backdrop) {
+        closeTagModal();
+    }
+    if (target === lightbox.prevBtn) navigateLightbox(-1);
+    if (target === lightbox.nextBtn) navigateLightbox(1);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.wrap.classList.contains('show')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      if (e.key === 'ArrowRight') navigateLightbox(1);
+    }
+    
+    if (e.key === 'Escape' && tagModal.wrap.classList.contains('show')) {
+        closeTagModal();
+    }
+
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement.classList.contains('polaroid')) {
+        e.preventDefault();
+        const index = polaroidElements.indexOf(document.activeElement);
+        openLightbox(index);
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    backToTopBtn.classList.toggle('show', window.scrollY > 300);
+    
+    if (heroImage) {
+        const scrollPosition = window.scrollY;
+        heroImage.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+    }
+  });
+
+  // Vlog and ambient audio interaction
+  if(cafeVlog) {
+    cafeVlog.addEventListener('play', () => {
+      if(isAmbientMusicOn) {
+        fadeAudio(ambienceAudio, 0, 800);
+      }
+    });
+
+    const fadeInMusic = () => {
+      if(isAmbientMusicOn) {
+        fadeAudio(ambienceAudio, ambientVolume, 800);
+      }
+    };
+    cafeVlog.addEventListener('pause', fadeInMusic);
+    cafeVlog.addEventListener('ended', fadeInMusic);
+  }
+
+  // --- INITIALIZATION ---
+  initTheme();
+  runTypewriter();
+  initStickyNote();
+  initInteractiveStamp();
+});
+</script>
+</body>
+</html>
+
