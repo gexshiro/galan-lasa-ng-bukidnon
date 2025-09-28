@@ -151,9 +151,6 @@
     transform: scale(1.03); /* Hover effect on the image */
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   }
-   figure.parallax-image {
-    /* removed transition for smoother JS-driven parallax */
-  }
 
   /* Reveal on Scroll Animation */
   .reveal-on-scroll {
@@ -334,7 +331,7 @@
         <svg class="w-8 h-8 text-soft-green" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="clip-header"><path d="M0 0h100v100H0z"/></clipPath></defs><g clip-path="url(#clip-header)"><path d="M50 2.5C23.8 2.5 2.5 23.8 2.5 50S23.8 97.5 50 97.5 97.5 76.2 97.5 50 76.2 2.5 50 2.5zm0 10c20.7 0 37.5 16.8 37.5 37.5S70.7 87.5 50 87.5 12.5 70.7 12.5 50 29.3 12.5 50 12.5z" fill="currentColor"/><path d="M69.8 50c0-10.9-8.9-19.8-19.8-19.8S30.2 39.1 30.2 50c0 8.9 5.9 16.4 14 18.9.6-2 .9-4 .9-6.1 0-7-5.7-12.7-12.7-12.7-2.1 0-4.1.5-5.9 1.5 3.3-12.2 14.9-21.2 28.5-21.2 16.5 0 29.8 13.3 29.8 29.8 0 2.7-.4 5.4-1 7.9-1.3-1-2.8-1.8-4.4-2.4-.1-1.8-.2-3.7-.2-5.7z" fill="currentColor"/></g></svg>
         <span class="font-display font-bold text-xl">Lasa ng Bukidnon</span>
       </a>
-      <nav class="flex items-center gap-10 text-sm">
+      <nav class="flex items-center gap-4 md:gap-8 lg:gap-10 text-sm">
         <a href="#journal" class="hover:text-soft-green transition-colors">Ang Kwento</a>
         <a href="#vlog" class="hover:text-soft-green transition-colors">Ang Vlog</a>
         <a href="#about" class="hover:text-soft-green transition-colors">Tungkol sa Akin</a>
@@ -373,8 +370,8 @@
           Sa gitna ng maalikabok na kalsada at matinding sikat ng araw sa Maramag, may mga lugar na nagsisilbing kanlungan—isang paanyaya upang saglit na huminto at huminga. Ganito ang naging dating sa akin ng 3Fern Café. Hindi ito planado; isa itong kusang paghahanap ng lilim na nauwi sa isang karanasang higit pa sa inaasahan. Sa pagbukas pa lang ng pinto, bumungad ang halimuyak ng kapeng bagong giling at ang payapang katahimikan—isang malinaw na paalala na sa loob, iba ang takbo ng oras.
         </p>
         
-        <div class="my-24 flex justify-center reveal-on-scroll">
-            <figure class="polaroid cursor-pointer max-w-sm parallax-image" tabindex="0" data-full="polaroid-overall-place.jpg">
+        <div class="my-16 md:my-24 flex justify-center reveal-on-scroll">
+            <figure class="polaroid cursor-pointer max-w-sm" tabindex="0" data-full="polaroid-overall-place.jpg">
                 <div class="washi-tape"></div>
                 <img class="rounded-lg shadow-md w-full h-full object-cover" src="polaroid-overall-place.jpg" alt="Ang buong lugar ng 3Fern">
                 <div class="integrated-caption text-center">
@@ -388,8 +385,8 @@
             Ang sikat ng araw sa katanghalian, na karaniwa'y nakakasilaw, ay tila naging isang malumanay na ilaw sa loob ng café. Sumasayaw ito sa ibabaw ng mga mesang kahoy, nagbibigay-buhay sa bawat sulok, at nagiging mainit na yakap sa sinumang naroroon. Sa ilalim ng liwanag na ito, pinili ko ang <strong>Korean Beef Stew</strong> at <strong>Buffalo Wings</strong>. Isang ngiti mula sa staff ang naghatid ng menu, isang simpleng galaw na puno ng pag-aalaga.
         </p>
         
-        <div class="my-24 grid grid-cols-2 gap-8 reveal-on-scroll">
-            <figure class="polaroid cursor-pointer parallax-image" tabindex="0" data-full="polaroid-beef-stew.jpg">
+        <div class="my-16 md:my-24 grid grid-cols-2 gap-8 reveal-on-scroll">
+            <figure class="polaroid cursor-pointer" tabindex="0" data-full="polaroid-beef-stew.jpg">
                 <div class="washi-tape"></div>
                 <img class="rounded-lg shadow-md w-full h-full object-cover" src="polaroid-beef-stew.jpg" alt="Korean Beef Stew">
                 <div class="integrated-caption text-center">
@@ -397,7 +394,7 @@
                     <figcaption>Init at linamnam na nagpapaalala sa tahanan.</figcaption>
                 </div>
             </figure>
-            <figure class="polaroid cursor-pointer parallax-image" tabindex="0" data-full="polaroid-buffalo-wings.jpg">
+            <figure class="polaroid cursor-pointer" tabindex="0" data-full="polaroid-buffalo-wings.jpg">
                 <div class="washi-tape"></div>
                 <img class="rounded-lg shadow-md w-full h-full object-cover" src="polaroid-buffalo-wings.jpg" alt="Buffalo Wings">
                 <div class="integrated-caption text-center">
@@ -616,25 +613,14 @@ document.addEventListener("DOMContentLoaded", function() {
   }, { threshold: 0.1 });
   sections.forEach(section => observer.observe(section));
 
-  // --- Back to Top & Parallax Scroll Events ---
-  const parallaxImages = document.querySelectorAll('.parallax-image');
-  window.addEventListener('scroll', () => {
-    // Back to top
+  // --- Back to Top Button ---
+  window.onscroll = function() {
     if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
       backToTopButton.classList.remove('hidden');
     } else {
       backToTopButton.classList.add('hidden');
     }
-
-    // Parallax
-    parallaxImages.forEach(el => {
-      const speed = -0.05; // Reduced speed for a more subtle effect
-      const elementTop = el.getBoundingClientRect().top;
-      const parallaxOffset = (elementTop - window.innerHeight / 2) * speed;
-      el.style.transform = `translateY(${parallaxOffset}px)`;
-    });
-  });
-
+  };
   backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   // --- YouTube API for Audio Control ---
@@ -677,3 +663,4 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 </body>
 </html>
+
