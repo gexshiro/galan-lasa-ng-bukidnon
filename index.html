@@ -415,7 +415,29 @@
   .back-to-top.show{ opacity:1; transform:none; }
   .postmark{ font-size:13px; transform:rotate(-8deg); }
 
-  footer{ margin-top:22px; padding-top:14px; border-top:1px dashed rgba(255,255,255,0.08); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items: center; }
+  footer { 
+    margin-top: 22px; 
+    padding-top: 14px; 
+    border-top: 1px dashed rgba(255,255,255,0.08); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 16px; 
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+  }
+  .copyright {
+    font-size: 12px;
+    color: var(--muted);
+    opacity: 0.8;
+    text-align: center;
+  }
   .chip{ 
     background: var(--c-chip-bg); 
     padding:6px 12px; 
@@ -665,12 +687,17 @@
       </section>
 
       <footer>
-        <div>Tags: 
-          <span class="chip" data-tag-title="Tungkol sa Café" data-quote="Sa bawat higop ng kape, may bagong kwentong nabubuo at may lumang alaalang binabalikan.">cafe</span> 
-          <span class="chip" data-tag-title="Tungkol sa Lumang Panahon" data-quote="Ang hindi lumingon sa pinanggalingan ay hindi makakarating sa paroroonan. — Dr. Jose Rizal">vintage</span> 
-          <span class="chip" data-tag-title="Tungkol sa Paglalakbay" data-quote="Ang tunay na paglalakbay ay hindi ang paghahanap ng mga bagong tanawin, kundi ang pagkakaroon ng mga bagong mata.">paglalakbay</span>
+        <div class="footer-top">
+          <div>Tags: 
+            <span class="chip" data-tag-title="Tungkol sa Café" data-quote="Sa bawat higop ng kape, may bagong kwentong nabubuo at may lumang alaalang binabalikan.">cafe</span> 
+            <span class="chip" data-tag-title="Tungkol sa Lumang Panahon" data-quote="Ang hindi lumingon sa pinanggalingan ay hindi makakarating sa paroroonan. — Dr. Jose Rizal">vintage</span> 
+            <span class="chip" data-tag-title="Tungkol sa Paglalakbay" data-quote="Ang tunay na paglalakbay ay hindi ang paghahanap ng mga bagong tanawin, kundi ang pagkakaroon ng mga bagong mata.">paglalakbay</span>
+          </div>
+          <div style="opacity:0.9;color:var(--c-text);font-size:13px">Travel Journal • 2025</div>
         </div>
-        <div style="opacity:0.9;color:var(--c-text);font-size:13px">Travel Journal • 2025</div>
+        <div class="copyright">
+          © 2025 Lasa ng Bukidnon. Lahat ng Karapatan ay Nakalaan.
+        </div>
       </footer>
     </div>
   </div>
@@ -1071,3 +1098,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
