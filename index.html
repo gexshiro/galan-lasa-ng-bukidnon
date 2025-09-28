@@ -507,7 +507,7 @@
 
   .video-container {
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
     max-width: 100%;
@@ -516,13 +516,14 @@
     margin: 10px auto;
     box-shadow: 0 10px 28px var(--c-shadow-heavy);
   }
-  .video-container video {
+  .video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     border-radius: 8px;
+    border: none; /* Remove iframe border */
   }
 
   @media (max-width:760px){
@@ -601,9 +602,15 @@
       <section id="vlog">
         <h2 class="section-title">Lasa ng Bukidnon</h2>
         <div class="video-container">
-          <video id="cafeVlog" controls poster="polaroid-overall-place.jpg" src="vlog-cafe-experience.mp4">
-            Paumanhin, hindi suportado ng iyong browser ang video tag.
-          </video>
+          <iframe 
+            id="cafeVlog"
+            src="https://www.youtube.com/embed/WpI9aoN-BlQ?enablejsapi=1&rel=0&showinfo=0&modestbranding=1" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            title="Lasa ng Bukidnon Vlog"
+            tabindex="0">
+          </iframe>
         </div>
       </section>
 
@@ -703,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('themeToggle');
   const audioToggle = document.getElementById('audioToggle');
   const ambienceAudio = document.getElementById('ambience');
-  const cafeVlog = document.getElementById('cafeVlog');
+  const youtubeVlog = document.getElementById('cafeVlog'); // Renamed to youtubeVlog
   const backToTopBtn = document.getElementById('backToTop');
   const polaroidElements = Array.from(document.querySelectorAll('.polaroid'));
   const heroImage = document.getElementById('heroImage');
@@ -754,6 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clearInterval(audioElement.fadeInterval);
     }
     
+    // Only play if target volume is > 0 and currently paused
     if (targetVolume > 0 && audioElement.paused) {
       audioElement.play().catch(()=>{});
     }
@@ -763,6 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentStep >= totalSteps) {
         clearInterval(audioElement.fadeInterval);
         audioElement.volume = targetVolume;
+        // Pause if target volume is 0
         if (targetVolume === 0) {
           audioElement.pause();
         }
@@ -1018,21 +1027,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Vlog and ambient audio interaction
-  if(cafeVlog) {
-    cafeVlog.addEventListener('play', () => {
-      if(isAmbientMusicOn) {
-        fadeAudio(ambienceAudio, 0, 800);
-      }
-    });
+  // Vlog and ambient audio interaction for YouTube iframe
+  if(youtubeVlog) {
+    let player; // YouTube Player object
 
-    const fadeInMusic = () => {
-      if(isAmbientMusicOn) {
-        fadeAudio(ambienceAudio, ambientVolume, 800);
+    // This function will be called by the YouTube API script
+    window.onYouTubeIframeAPIReady = function() {
+      player = new YT.Player('cafeVlog', {
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    // This function runs when the player's state changes
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        // Video is playing, fade out ambient music
+        if (isAmbientMusicOn) {
+          fadeAudio(ambienceAudio, 0, 800);
+        }
+      } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+        // Video is paused or ended, fade in ambient music
+        if (isAmbientMusicOn) {
+          fadeAudio(ambienceAudio, ambientVolume, 800);
+        }
       }
-    };
-    cafeVlog.addEventListener('pause', fadeInMusic);
-    cafeVlog.addEventListener('ended', fadeInMusic);
+    }
+
+    // Load the YouTube Iframe API asynchronously
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
 
   // --- INITIALIZATION ---
@@ -1044,4 +1071,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
